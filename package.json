@@ -1,0 +1,22 @@
+{
+  "name": "prototype-member-management-service",
+  "version": "1.0.0",
+  "description": "The module to provide services which are sign up, sign in and sign out of user",
+  "main": "src/server.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "prototype", "member management", "service"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:kekekj/prototype-member-management-service.git"
+  },
+  "author": {
+    "name": "kbk",
+    "email": "kekekj@naver.com",
+  },
+  "license": "MIT"
+}

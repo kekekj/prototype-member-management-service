@@ -50,3 +50,10 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# npm modules
+/node_modules
+package-lock.json
+/test
+/.vscode
+/__test__

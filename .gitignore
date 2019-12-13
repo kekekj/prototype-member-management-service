@@ -57,3 +57,4 @@ package-lock.json
 /test
 /.vscode
 /__test__
+/log_files

@@ -6,7 +6,8 @@
   "private": true,
   "scripts": {
     "eslint": "eslint --config=.eslintrc.js",
-    "test": "jest"
+    "test": "jest",
+    "dev": "NODE_ENV=development node src/server.js"
   },
   "keywords": [
     "prototype",
@@ -30,7 +31,10 @@
     "lodash": "^4.17.15",
     "mongoose": "^5.7.14",
     "passport": "^0.4.0",
-    "passport-local": "^1.0.0"
+    "passport-facebook": "^3.0.0",
+    "passport-local": "^1.0.0",
+    "passport-openid": "^0.4.0",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "@types/connect-flash": "0.0.35",
@@ -43,10 +47,13 @@
     "@types/passport-local": "^1.0.33",
     "@typescript-eslint/eslint-plugin": "^2.10.0",
     "@typescript-eslint/parser": "^2.10.0",
+    "debug": "^4.1.1",
     "eslint": "^6.7.2",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
     "jest": "^24.9.0",
+    "morgan": "^1.9.1",
+    "supertest": "^4.0.2",
     "typescript": "^3.7.3"
   }
 }

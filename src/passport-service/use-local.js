@@ -1,13 +1,18 @@
+const passport = require('passport')
 const  LocalStrategy = require('passport-local').Strategy;
+const logger = require('../core/logger')
 
 /**
- * @param {any} passport passport module
+ * @param {any} mongooseModel 
+ * @returns {() => void} 
  */
-function useLocalStrategy(passport) {
-  return (mongooseModel) => {
+function useLocal(mongooseModel) {
+  if (typeof mongooseModel === 'undefined') {
+    logger.error(new Error('No expected localStore to be undefined.'))
+    return 
+  }
   
-
-    passport.use(new LocalStrategy(
+  passport.use(new LocalStrategy(
       (username, password, done) => {
 
         // @ts-ignore
@@ -25,11 +30,12 @@ function useLocalStrategy(passport) {
           // if (!user.validPassword(password)) {
           //   return done(null, false, { message: 'Incorrect password.' });
           // }
+          
           return done(null, user);
         });
       }
-    ));
-  }
+  ));
+  
 }
 
-module.exports = useLocalStrategy
+module.exports = useLocal

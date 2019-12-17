@@ -1,9 +1,11 @@
-const {root, login} = require('./var/routePaths')
-
+const passport = require('passport')
+const {root, login, signup} = require('./var/routePaths')
+const signupView = require('../routing-middleware/signup/signup-view')
+const signupPost = require('../routing-middleware/signup/signup-post')
 /**
- * @param {import('passport').PassportStatic} passport 
+
  */
-function createRoutesToBase(passport) {
+function createRoutesToBase() {
   const GET = 'get'
   const POST = 'post'
   const LOCAL = 'local'
@@ -31,6 +33,23 @@ function createRoutesToBase(passport) {
         (req, res) => {
           res.end(`login page for request ${req.url}`)
         }
+      ]
+    },
+    {
+      method: GET,
+      path: signup,
+      middleware: [
+        async (req, res) => {
+          const body = await signupView()
+          res.end(body)
+        }
+      ]
+    },
+    {
+      method: POST,
+      path: signup,
+      middleware: [
+        signupPost
       ]
     },
     {

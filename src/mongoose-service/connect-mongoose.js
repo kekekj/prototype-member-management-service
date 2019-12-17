@@ -1,10 +1,8 @@
+const mongoose = require('mongoose')
 const mongooseConfig = require('./var/mongoose-config')
 const logger = require('../core/logger')
 
-/**
- * @param {import('mongoose')} mongoose
- */
-function connectMongoose(mongoose) {
+function connectMongoose() {
   const {uri, connectionOptions} = mongooseConfig
 
   return mongoose.connect(uri, connectionOptions).then(() => {

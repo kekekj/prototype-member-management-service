@@ -1,44 +1,39 @@
 const {execStartMongod} = require('./core/child-process')
-const connection = require('./var/connection')
+const {httpS_options} = require('./var-global/connection')
 const ExpressService = require('./express-service')
 const MongooseService = require('./mongoose-service')
 const PassportService = require('./passport-service')
-const Router = require('./router')
+const logger = require('./core/logger')
 
 process.on('unhandledRejection', (reason, promise) => {
-  console.log('Unhandled Rejection at:', promise, 'reason:', reason);
+  logger.error('Unhandled Rejection at:', promise, 'reason:', reason);
 });
 
-process.on('uncaughtException', (err, origin) => {
-  console.log(err)
-  console.log(origin)
+process.on('uncaughtException', (err) => {
+  logger.error(err.stack)
 });
 
 const Server = (() => {
-  const state = {definition: {username: String, password: Number}, modelName: 'testUser'}
-  const mongooseService = MongooseService(state)
-  const passportService = PassportService()
-
-  const expressService = ExpressService({
-    router: Router,
-    service: {
-      mongooseService,
-      passportService
-    }
-  })
+  const Model = MongooseService.getModel()
 
   return {
-    init() {
+    runDB() {
       execStartMongod()
+      MongooseService.connectDB()
+    },
+    initServices() {
+      PassportService.initSerialization(Model)
+      PassportService.useLocal(Model)
+      PassportService.useFacebook(Model)
+      PassportService.useGoogle(Model)
+      ExpressService.onRouting()
     },
     run() {
-      mongooseService.connect()
-      expressService.bootstrap()
-      expressService.onRouting()
-      expressService.listen(connection)
+      ExpressService.listenHTTPS(httpS_options)
     }
   }
 })()
 
-Server.init()
+Server.runDB()
+Server.initServices()
 Server.run()

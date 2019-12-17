@@ -1,9 +1,7 @@
+const mongoose = require('mongoose')
 const logger = require('../core/logger')
 
-/**
- * @param {import('mongoose')} mongoose 
- */
-function connectionEventHandler(mongoose) {
+function connectionEventHandler() {
   const db = mongoose.connection
   
   db.on('error', (err) => {

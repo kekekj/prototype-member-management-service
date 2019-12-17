@@ -5,6 +5,9 @@
  * @property {string} auth
  * @property {string} facebook
  * @property {string} facebook_callback
+ * @property {string} google
+ * @property {string} google_callback
+ * @property {string} signup
  */
 /**@type {paths} */
 const routePaths = (() => {
@@ -13,7 +16,10 @@ const routePaths = (() => {
     login: '/login',
     auth: '/auth',
     facebook: '/facebook',
-    facebook_callback: '/facebook/callback'
+    facebook_callback: '/facebook/callback',
+    google: '/google',
+    google_callback: '/google/callback',
+    signup: '/signup'
   }
 })()
 

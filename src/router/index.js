@@ -8,7 +8,6 @@ function Router(app) {
     throw new Error('No expected store to be undefined.')
   }
   
-
   return {
     use(routes) {
       routes.forEach(route => {

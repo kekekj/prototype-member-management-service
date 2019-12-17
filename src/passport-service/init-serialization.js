@@ -1,5 +1,15 @@
-function initSerialization(passport) {
-  return (mongooseModel) => {
+const passport = require('passport')
+const logger = require('../core/logger')
+
+/**
+ * @param {any} mongooseModel 
+ * @returns {() => void} 
+ */
+function initSerialization(mongooseModel) {
+  if (typeof mongooseModel === 'undefined') {
+    logger.error('No expected localInjection to be undefined.')
+    return 
+  }
     // @ts-ignore
     passport.serializeUser((user, done) => {
       done(null, user.id);
@@ -12,7 +22,7 @@ function initSerialization(passport) {
         done(err, user);
       });
     });
-  }
+  
 }
 
 module.exports = initSerialization

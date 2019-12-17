@@ -5,7 +5,7 @@ const morgan = require('morgan')
 const morganWrapper = (() => {
   const accessLogStream = fs.createWriteStream(path.join('log_files', 'request.log'), { flags: 'a' })
 
-  const format = ':method :url :status :res[content-length] - :response-time ms'
+  const format = ':method :url :status :res[content-length] - :response-time ms :date[Asia/Seoul]'
   const outOpts = { stream: accessLogStream }
 
   return {

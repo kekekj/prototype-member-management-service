@@ -1,43 +1,27 @@
 const express = require('express')
-const listen = require('./listen')
-const RouteManager = require('../route-manager')
+const listenHTTP = require('./listen-http')
+const listenHTTPS = require('./listen-https')
+const Routes = require('../route-manager')
+const Router = require('../router')
 const mountMiddleware = require('./mount-middleware')
 
-function ExpressService(state) {
+const ExpressService = (() => {
   const app = express()
-  let store = {}
-
-  const {service, Router} = state
-  const {passportService, mongooseService} = service
-
-  const passport = passportService.getPassport()
-  const model = mongooseService.model
-
-  store = Object.assign(store, 
-    {
-      app,
-      passport,
-      model
-    }
-  )
-
-  const routeManager = RouteManager(store)
-  const {routesToPassportLocal, routesToPassportFacebook} = routeManager
+  
+  mountMiddleware(app)
 
   return {
-    bootstrap() {
-      mountMiddleware(store)
-      passportService.initSerialization(model)
-      passportService.useLocalStrategy(model)
-      passportService.userFacebookStrategy(model)
-    },
     onRouting() {
       const router = Router(app)
-      router.use(routesToPassportLocal)
-      router.mountRouterModule('/auth', routesToPassportFacebook)
+
+      router.use(Routes.passportLocal)
+      router.mountRouterModule('/auth', Routes.passportFacebook)
+      router.mountRouterModule('/auth', Routes.passportGoogle)
+ 
     },
-    listen: listen(app),
+    listenHTTP: listenHTTP(app),
+    listenHTTPS: listenHTTPS(app),
   }
-}
+})()
 
 module.exports = ExpressService

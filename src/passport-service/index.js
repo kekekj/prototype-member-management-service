@@ -1,15 +1,13 @@
-const passport = require('passport')
-const initSerialization = require("./init-serialization")
-const useLocalStrategy = require('./use-local-strategy')
-const userFacebookStrategy = require('./use-facebook-strategy')
+const initSerialization = require('./init-serialization')
+const useLocal = require('./use-local')
+const useFacebook = require('./use-facebook')
+const useGoogle = require('./use-google')
 
-function PassportService() {
-  return {
-    getPassport() { return passport},
-    initSerialization: initSerialization(passport),
-    useLocalStrategy: useLocalStrategy(passport),
-    userFacebookStrategy: userFacebookStrategy(passport)
-  }
-}
+const PassportService = {}
+
+PassportService.initSerialization = initSerialization
+PassportService.useLocal = useLocal
+PassportService.useFacebook = useFacebook
+PassportService.useGoogle = useGoogle
 
 module.exports = PassportService

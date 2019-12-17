@@ -1,12 +1,11 @@
+const passport = require('passport')
 const {facebook, facebook_callback} = require('./var/routePaths')
+
 /**
- * @param {import("passport").PassportStatic} passport 
  * @return {{method: string, path: string, middleware: []}[]}
  */
-function createRoutesToPassport(passport) {
-  if (typeof passport === 'undefined') {
-    throw new Error('No expected passport to be undefined.')
-  }
+function createRoutesToPassport() {
+ 
 
   const GET = 'get'
   const FACEBOOK = 'facebook'
@@ -25,7 +24,9 @@ function createRoutesToPassport(passport) {
       middleware: [
         passport.authenticate(
           FACEBOOK,
-          { failureRedirect: '/login' }
+          { successRedirect: '/',
+            failureRedirect: '/login' 
+          }
         ),
         (req, res) => {
           res.redirect('/')

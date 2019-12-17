@@ -4,7 +4,8 @@ const mongooseConfig = (() => {
     connectionOptions: {
       useNewUrlParser: true,
       useUnifiedTopology: true
-    }
+    },
+    modelName: 'testuser'
   }
 })()
 

@@ -2,14 +2,13 @@ const  bodyParser = require("body-parser");
 const express = require('express')
 const flash = require('connect-flash');
 const session = require("express-session")
+const passport = require('passport')
 const morganWrapper = require('../core/morgan-wrapper')
 
 /**
- * @param {object} store 
+ * @param {object} app 
  */
-function mountMiddleware(store) {
-  const {app, passport} = store
-  
+function mountMiddleware(app) {
   app.use(express.static('public'))
   app.use(flash());
   app.use(session({ secret: "cats", resave: true, saveUninitialized: true}));

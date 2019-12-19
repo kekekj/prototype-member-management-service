@@ -1,5 +1,5 @@
 const passport = require('passport')
-const {login, signup, signup_ajax_login, login_ajax_check_logged} = require('./var/routePaths')
+const P_ = require('./var/routePaths')
 const loginGET = require('./middleware/login-get')
 const loginAjaxCheckLogged = require('./middleware/login-ajax-check-logged')
 const signupPOST = require('./middleware/signup-post')
@@ -18,18 +18,18 @@ const routesPassportLocal = (() => {
     failureFlash: true,
   }
 
-  const routeLoginGET = [{
+  const route_login_GET = [{
     method: GET,
-    path: login,
+    path: P_.LOGIN,
     middleware: [
       loginGET.clearCookie,
       loginGET.respondHTMl
     ]
   }]
 
-  const routeLoginPOST = [{
+  const route_login_POST = [{
     method: POST,
-    path: login,
+    path: P_.LOGIN,
     middleware: [
       passport.authenticate(
         LOCAL, 
@@ -39,25 +39,25 @@ const routesPassportLocal = (() => {
     ]
   }]
 
-  const routeLoginAjaxCheckLogged = [{
+  const route_login_check_logged_AJAX = [{
     method: GET,
-    path: login_ajax_check_logged,
+    path: P_.LOGIN_AJAX_CHECK_LOGGED,
     middleware: [
       loginAjaxCheckLogged.respondJSON
     ]
   }]
 
-  const routeSignupGET = [{
+  const route_signup_GET = [{
     method: GET,
-    path: signup,
+    path: P_.SIGNUP,
     middleware: [
       signupGET.readIndexPage
     ]
   }]
 
-  const routeSignupPOST = [{
+  const route_signup_POST = [{
     method: POST,
-    path: signup,
+    path: P_.SIGNUP,
     middleware: [
       signupPOST.validateInputs,
       signupPOST.setSignedCookie,
@@ -66,21 +66,30 @@ const routesPassportLocal = (() => {
     ]
   }]
 
-  const routeSignupAjaxFailed = [{
+  const route_signup_failed_AJAX = [{
     method: GET,
-    path: signup_ajax_login,
+    path: P_.SIGNUP_AJAX_LOGIN,
     middleware: [
       signupGETAjaxLogin.respondJSON
     ]
   }]
 
+  const route_signup_facebook = [{
+    method: GET,
+    path: P_.SIGNUP_FACEBOOK,
+    middleware: [
+
+    ]
+  }]
+
   return [
-    ...routeLoginGET,
-    ...routeLoginPOST,
-    ...routeLoginAjaxCheckLogged,
-    ...routeSignupGET,
-    ...routeSignupPOST,
-    ...routeSignupAjaxFailed
+    ...route_login_GET,
+    ...route_login_POST,
+    ...route_login_check_logged_AJAX,
+    ...route_signup_GET,
+    ...route_signup_POST,
+    ...route_signup_failed_AJAX,
+    ...route_signup_facebook
   ]
 })()
 

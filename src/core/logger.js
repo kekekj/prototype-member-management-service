@@ -6,6 +6,11 @@ const myFormat = printf(({ level, message, label, timestamp }) => {
   return `${timestamp} [${label}] ${level}: ${message}`;
 });
 
+function createErrMsg(msg) {
+  return typeof msg === 'string'
+    ? new Error(msg)
+    : msg
+}
 
 
 // const willNeverThrow = format.combine(
@@ -62,30 +67,29 @@ if (process.env.NODE_ENV !== 'production') {
   }));
 }
 
-function getStack(msg) {
-  return msg.stack ? msg.stack : msg
-}
 
 function loggerWrapper() {
   return {
     info(msg) {
-      const stack = getStack(msg)
+      // to do: display error place
+      const stack = msg
       logger.info('------------Log Start------------')
       logger.info(stack)
       console.log(stack)
     },
     debug(msg) {
-      const stack = getStack(msg)
+      const msgToDebug = createErrMsg(msg)
+
       debugLogger.info('------------Debug Log Start------------')
-      debugLogger.info(stack)
-      console.log(stack)
+      debugLogger.info(msgToDebug)
+      console.log(msgToDebug)
     },
     error(msg) {
-      const stack = getStack(msg)
+      const msgToErr = msg
       
       errLogger.error('------------Error Log Start------------')
-      errLogger.error(stack)
-      console.log(stack)
+      errLogger.error(msgToErr)
+      console.log(msgToErr)
     }
   }
 }

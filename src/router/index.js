@@ -10,7 +10,7 @@ function Router(app) {
   
   return {
     use(routes) {
-      routes.forEach(route => {
+      routes.forEach(function mountRoutes(route) {
         const {method, path, middleware} = route
         
         if (method === 'get') {
@@ -27,7 +27,7 @@ function Router(app) {
     mountRouterModule(root, routes) {
       const routerToMount = express.Router()
 
-      routes.forEach(route => {
+      routes.forEach(function mountRoutesIntoRouterModule(route) {
         const {method, path, middleware} = route
 
         if (method === 'get') {

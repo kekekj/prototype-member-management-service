@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const {modelName, uri} = require('./var/mongoose-config')
 const logger = require('../core/logger')
 
 function connectionEventHandler() {
@@ -9,7 +10,7 @@ function connectionEventHandler() {
   });
 
   db.once('open', () => {
-    logger.info('connected ok')
+    logger.info(`Event 'open' : Connection to [${uri}], model: [${modelName}].`)
   });
 }
 

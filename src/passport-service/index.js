@@ -3,11 +3,8 @@ const useLocal = require('./use-local')
 const useFacebook = require('./use-facebook')
 const useGoogle = require('./use-google')
 
-const PassportService = {}
+exports.initSerialization = initSerialization
+exports.useLocal = useLocal
+exports.useFacebook = useFacebook
+exports.useGoogle = useGoogle
 
-PassportService.initSerialization = initSerialization
-PassportService.useLocal = useLocal
-PassportService.useFacebook = useFacebook
-PassportService.useGoogle = useGoogle
-
-module.exports = PassportService

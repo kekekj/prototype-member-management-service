@@ -5,34 +5,52 @@
     <script async src="main.js"></script>
   </head>
   <body>
-    <h1>Hello world kbk</h1>
+    <div id="root">
+      <h1>Login</h1>
 
+      <form action="/login" method="post">
+        <div>
+            <label>Username:</label>
+            <input type="text" name="username"/>
+        </div>
+        <div>
+            <label>Password:</label>
+            <input type="password" name="password"/>
+        </div>
+        <div>
+            <input type="submit" value="Log In"/>
+        </div>
+    </form>
     
-
-    <form action="/login" method="post">
-      <div>
-          <label>Username:</label>
-          <input type="text" name="username"/>
-      </div>
-      <div>
-          <label>Password:</label>
-          <input type="password" name="password"/>
-      </div>
-      <div>
-          <input type="submit" value="Log In"/>
-      </div>
-  </form>
+    <div>
+      <a href="/auth/facebook">Login with Facebook</a>
+    </div>
+    
+    <div>
+      <a href="/auth/google">Login In with Google</a>
+    </div>
   
-  <div>
-    <a href="/auth/facebook">Login with Facebook</a>
-  </div>
-  
-  <div>
-    <a href="/auth/google">Login In with Google</a>
-  </div>
+    <p>
+      <div><a href="/signup">Sign up</a></div>
+    </p>
 
-  <p>
-    <div><a href="/signup">Sign up</a></div>
-  </p>
+    </div>
+
+  <script>
+  const request = new XMLHttpRequest()
+
+  request.open("GET", "/ajax/login");
+request.send();
+
+request.onreadystatechange = function () {
+ if(request.readyState === XMLHttpRequest.DONE && request.status === 200) {
+   if (request.responseText) {
+    document.getElementById('root').innerHTML = request.responseText
+   }
+  
+}};
+
+localStorage.setItem('IS_LOGIN', 'FALSE')
+  </script>
   </body>
 </html>

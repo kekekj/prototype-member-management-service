@@ -12,11 +12,6 @@ function createSchema() {
       validate: Validators.toID,
       required: [true, 'id required.']
     },
-    // 'password': {
-    //   type: Number,
-    //   validate: Validators.toPassword,
-    //   required: [true, 'password required.']
-    // },
     'email': {
       type: String,
       index: true,

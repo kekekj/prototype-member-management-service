@@ -1,3 +1,5 @@
+const regExp = require('../../var-global/regExp')
+
 function createMsg(props) { 
   return props.reason.message;
 }
@@ -12,7 +14,7 @@ const toID = [
   },
   {
     validator: (v) => {
-      if ( /^[a-zA-Z0-9]{6,10}$/.test(v) === false) {
+      if (!regExp.toID.NO_SPECIAL_CHARACTER_SIZE_6_TO_10.test(v)) {
         throw new Error('No special character allowed.')
       }
     },
@@ -23,9 +25,7 @@ const toID = [
 const toPassword = [
   {
     validator: (v) => {
-      if(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$/.test(v)
-        === false
-      ) {
+      if(!regExp.toPassword.VALID_PASSWORD_SIZE_8_TO_12.test(v)) {
         throw new Error('Invalid password')
       }
     },
@@ -36,19 +36,14 @@ const toPassword = [
 const toEmail = [
   {
     validator: (v) => {
-      const regExpToEmail =  /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-      if (!regExpToEmail.test(v)) {
+      if (!regExp.toEmail.VALID_EMAIL.test(v)) {
         throw new Error('Invalid email.')
       }
     },
     message: createMsg
   }
 ]
-const Validators = {}
 
-Validators.toID = toID
-Validators.toPassword = toPassword
-Validators.toEmail = toEmail
-
-module.exports = Validators
+exports.toID = toID
+exports.toPassword = toPassword
+exports.toEmail = toEmail

@@ -1,6 +1,6 @@
-const {execStartMongod} = require('./core/child-process')
 const {httpS_options} = require('./var-global/connection')
 const ExpressService = require('./express-service')
+const MongodService = require('./mongod-service')
 const MongooseService = require('./mongoose-service')
 const PassportService = require('./passport-service')
 const logger = require('./core/logger')
@@ -18,8 +18,10 @@ const Server = (() => {
 
   return {
     runDB() {
-      execStartMongod()
-      MongooseService.connectDB()
+      MongodService.Client.checkStatus()
+        .then(() => {
+          MongooseService.connectDB()
+        })
     },
     initServices() {
       PassportService.initSerialization(Model)

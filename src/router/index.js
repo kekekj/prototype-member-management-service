@@ -1,4 +1,5 @@
 const express = require('express')
+const logger = require('../core/logger')
 
 /**
  * @param {import('express').Application} app 
@@ -26,20 +27,25 @@ function Router(app) {
     },
     mountRouterModule(root, routes) {
       const routerToMount = express.Router()
-
-      routes.forEach(function mountRoutesIntoRouterModule(route) {
-        const {method, path, middleware} = route
-
-        if (method === 'get') {
-          routerToMount.get(path, middleware)
-          return
-        }
-
-        if (method === 'post') {
-          routerToMount.post(path, middleware)
-          return
-        }
-      })
+      
+      try {
+        routes.forEach(function mountRoutesIntoRouterModule(route) {
+          const {method, path, middleware} = route
+  
+          if (method === 'get') {
+            routerToMount.get(path, middleware)
+            return
+          }
+  
+          if (method === 'post') {
+            routerToMount.post(path, middleware)
+            return
+          }
+        })
+      } catch (e) {
+        logger.error(e)
+        return
+      }
 
       app.use(root, routerToMount)
     }

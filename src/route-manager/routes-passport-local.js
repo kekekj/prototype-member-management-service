@@ -1,11 +1,11 @@
 const passport = require('passport')
-const P_ = require('./var/routePaths')
+const P_ = require('./var/ROUTE_PATH')
 const loginGET = require('./middleware/login-get')
 const loginAjaxCheckLogged = require('./middleware/login-ajax-check-logged')
 const signupPOST = require('./middleware/signup-post')
 const signupGET = require('./middleware/signup-get')
 const signupGETAjaxLogin =  require('./middleware/signup-ajax-get')
-
+const signup_facebook_GET = require('./middleware/signup-facebook-get')
 
 const routesPassportLocal = (() => {
   const GET = 'get'
@@ -78,7 +78,8 @@ const routesPassportLocal = (() => {
     method: GET,
     path: P_.SIGNUP_FACEBOOK,
     middleware: [
-
+      signup_facebook_GET.dispatchServiceType,
+      signup_facebook_GET.respond
     ]
   }]
 

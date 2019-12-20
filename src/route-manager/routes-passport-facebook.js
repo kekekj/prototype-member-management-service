@@ -1,5 +1,5 @@
 const passport = require('passport')
-const {facebook, facebook_callback} = require('./var/routePaths')
+const P_ = require('./var/ROUTE_PATH')
 
 const routesPassportFacebook = (() => {
   const GET = 'get'
@@ -7,7 +7,7 @@ const routesPassportFacebook = (() => {
 
   const routeFacebookGET = [{
     method: GET,
-    path: facebook,
+    path: P_.FACEBOOK,
     middleware: [
       passport.authenticate(FACEBOOK)
     ]
@@ -15,7 +15,7 @@ const routesPassportFacebook = (() => {
 
   const routeFacebookCallbackGET = [{
     method: GET,
-    path: facebook_callback,
+    path: P_.FACEBOOK_CALLBACK,
     middleware: [
       passport.authenticate(
         FACEBOOK,

@@ -1,6 +1,7 @@
 const passport = require('passport')
 const FacebookStrategy = require('passport-facebook').Strategy;
 const clientConfig = require('./var/client-config')
+const Store = require('../store-service')
 const logger = require('../core/logger')
 
 /**
@@ -12,14 +13,17 @@ function useFacebook(mongooseModel) {
     return
   }
 
+
     passport.use(new FacebookStrategy({
         ...clientConfig.facebook
       },
 
       (accessToken, refreshToken, profile, done) => {
-        logger.debug(`accessToken: ${accessToken}`)
-        logger.debug(`refreshToken: ${refreshToken}`)
-        logger.debug(`profile: ${profile.id}`)
+        logger.info(`accessToken: ${accessToken}`)
+        logger.info(`refreshToken: ${refreshToken}`)
+        logger.info(`profile: ${profile.id}`)
+
+        console.log(Store.getState())
 
         mongooseModel.findOne({ username: ''}, (err, user) => {
           if (err) {

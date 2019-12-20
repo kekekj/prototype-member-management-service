@@ -1,12 +1,12 @@
 const passport = require('passport')
-const {google, google_callback} = require('./var/routePaths')
+const P_ = require('./var/ROUTE_PATH')
 
 const routesPassportGoogle = (() => {
   const GET = 'get'
 
   const routeGoogle = [{
     method: GET,
-    path: google,
+    path: P_.GOOGLE,
     middleware: [
       passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] })
     ] 
@@ -14,7 +14,7 @@ const routesPassportGoogle = (() => {
 
   const routeGoogleCallback = [{
     method: GET,
-    path: google_callback,
+    path: P_.GOOGLE_CALLBACK,
     middleware: [
       passport.authenticate('google', { failureRedirect: '/login' }),
     ]
